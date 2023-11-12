@@ -1,6 +1,6 @@
 # Proxmox Commands
 - **[Proxmox Docss](https://pve.proxmox.com/pve-docs)**
-- Download **[Proxmox Download]https://www.proxmox.com/en)**
+- **[Proxmox Download](https://www.proxmox.com/en)**
 
 **Proxmox low power mode**
 ```
