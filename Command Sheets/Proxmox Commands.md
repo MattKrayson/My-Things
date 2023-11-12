@@ -6,3 +6,13 @@
 ```
 echo "powersave" | tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor
 ```
+
+**See CPU speed**
+**Press ctrl + c to end loop
+```
+while true; do
+    cat /proc/cpuinfo | grep "MHz"
+    sleep 1
+    clear
+done
+```
