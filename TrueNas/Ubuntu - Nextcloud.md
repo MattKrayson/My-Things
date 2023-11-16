@@ -74,7 +74,7 @@ QUIT;
 wget https://download.nextcloud.com/server/releases/nextcloud-27.1.2.zip
 ```
 ```
-unzip nextcloud-26.0.1.zip
+unzip nextcloud-27.1.2.zip
 ```
 ```
 mv nextcloud /var/www/html/
