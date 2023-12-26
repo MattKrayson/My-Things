@@ -1,0 +1,51 @@
+Linux Server Setup
+This setup guide will follow the readme closely, but will go into more detail in some areas. This setup will utilize "screens", which are virtual Linux terminals.
+
+0) Preperation:
+open a linux terminal
+run apt install screen
+run apt install git
+install python 3.XX if not present
+install pip if not present
+1) Mounting realdebrid:
+Please keep in mind that most debrid services dont allow you to access their service from multiple IP addresses in parallel. This is not an issue if you have a Plex server running, since everything you stream through plex (from any location, no matter how many in parallel) is routed through your servers IP address. While you have your plex server running though, you should not download from your debrid service in any other way than through plex.
+
+open a linux terminal
+run wget https://github.com/itsToggle/rclone_RD/releases/download/v1.58.1-rd.2.2/rclone-linux
+run chmod u+x ./rclone-linux
+run ./rclone-linux config
+type n to create a new rclone remote
+type realdebrid to name your new remote "realdebrid"
+type 47 to choose the remote type "47) realdebrid"
+enter your realdebrid API key (https://real-debrid.com/apitoken)
+choose "no" when asked for advanced settings
+continue through the rest of the prompted instructions.
+type q to quit the rclone config menu.
+run mkdir torrents to create a directory named "torrents"
+run screen -S rclone to create a new virtual terminal named "rclone"
+press enter. You are now in the virtual terminal.
+run ./rclone-linux mount realdebrid: torrents --dir-cache-time 10s --allow-other
+you should see the message "The service rclone has been started"
+press ctrl + a and then press d to exit out of the virtual terminal.
+run ls torrents to confirm that you can now see the 3 folders "default", "movies" and "shows". If you don't see anything or you get errors, run screen -r rclone to return to your virtual rclone terminal and investigate any errors.
+you have successfully mounted realdebrid. You can return to your virtual rclone terminal any time by running screen -r rclone.
+2) Setup Plex:
+follow any number of online guides on how to install and start your Plex server. Once the server is running and you have claimed it with your Plex account, follow these steps:
+
+open a linux terminal
+run chown -R plex:plex torrents
+open the Plex webUI
+create a new Plex library for movies, add the folders "/torrents/default" and "/torrents/movies"
+create a new Plex library for shows, add the folders "/torrents/default" and "/torrents/shows"
+Recommendation: disable 'video preview thumbnails', disable the scheduled task 'perfom extensive media analysis' to reduce the download traffic
+Disable the libary setting "Empty trash after every scan", to make sure that no content is removed accidentaly
+3) Setup plex_debrid:
+open a linux terminal
+run git clone https://github.com/itsToggle/plex_debrid
+run pip install -r ./plex_debrid/requirements.txt
+run screen -S plex_debrid to create a new virtual terminal named "plex_debrid"
+press enter. You are now in the virtual terminal.
+run python ./plex_debrid/main.py
+follow the setup instructions
+choose option "1) Run" to run the download automation
+press ctrl + a and then press d to exit out of the virtual terminal. You can return to the terminal any time by running screen -r plex_debrid
